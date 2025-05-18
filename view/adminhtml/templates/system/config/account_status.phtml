@@ -1,0 +1,62 @@
+<?php
+/**
+ * @var \NeutromeLabs\Core\Block\Adminhtml\System\Config\AccountStatus $block
+ */
+?>
+
+<?php $statusMessage = $block->getStatusMessage(); ?>
+<?php if ($statusMessage): ?>
+    <p class="message message-<?= $block->isSignedIn() ? 'success' : 'warning' ?>">
+        <?= $block->escapeHtml($statusMessage) ?>
+    </p>
+<?php endif; ?>
+
+<?php if ($block->isSignedIn()): ?>
+    <p>
+        <strong><?= $block->escapeHtml(__('Account Email: %1', $block->getAccountEmail())) ?></strong>
+    </p>
+    <button
+        type="button"
+        title="<?= $block->escapeHtmlAttr(__('Sign In to a Different Account')) ?>"
+        class="action-secondary"
+        onclick="
+            try {
+                let currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.delete('callback');
+                window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(currentUrl.toString());
+            } catch (e) {
+                
+                let fallbackUrl = window.location.href.split('?')[0]; 
+                window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(fallbackUrl);
+                console.error('Error constructing NeutromeLabs sign-in URL:', e);
+            }
+            return false;
+        "
+        >
+        <span><?= $block->escapeHtml(__('Sign In to a Different Account')) ?></span>
+    </button>
+<?php else: ?>
+    <button
+        type="button"
+        title="<?= $block->escapeHtmlAttr(__('Sign In')) ?>"
+        class="action-primary" 
+        onclick="
+            try {
+                let currentUrl = new URL(window.location.href);
+                currentUrl.searchParams.delete('callback');
+                window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(currentUrl.toString());
+            } catch (e) {
+                
+                let fallbackUrl = window.location.href.split('?')[0];
+                window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(fallbackUrl);
+                console.error('Error constructing NeutromeLabs sign-in URL:', e);
+            }
+            return false;
+        "
+        >
+        <span><?= $block->escapeHtml(__('Sign In')) ?></span>
+    </button>
+    <p class="note">
+        <span><?= $block->escapeHtml(__('Click to sign in to your NeutromeLabs Cloud account.')) ?></span>
+    </p>
+<?php endif; ?>
