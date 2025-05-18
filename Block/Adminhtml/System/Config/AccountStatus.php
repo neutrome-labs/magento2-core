@@ -37,7 +37,9 @@ class AccountStatus extends \Magento\Config\Block\System\Config\Form\Field
         $this->logger = $context->getLogger();
         parent::__construct($context, $data);
 
+        // disable caching
         $this->setCacheLifetime(false);
+        $this->setCacheKey(null);
     }
 
     public function render(AbstractElement $element): string

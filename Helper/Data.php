@@ -8,15 +8,14 @@ use Magento\Framework\App\Helper\Context;
 use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Backend\Model\UrlInterface as BackendUrlInterface;
 use Magento\Framework\App\RequestInterface;
-use Magento\Framework\App\Config\ScopeConfigInterface;
 use Psr\Log\LoggerInterface;
 
 class Data extends AbstractHelper
 {
 
-    const string BASE_URL_CONFIG_PATH = 'neutromelabs/cloud/base_url';
+    const BASE_URL_CONFIG_PATH = 'neutromelabs/cloud/base_url';
 
-    const string TOKEN_CONFIG_PATH = 'neutromelabs/cloud/token';
+    const TOKEN_CONFIG_PATH = 'neutromelabs/cloud/token';
 
     protected WriterInterface $configWriter;
 
