@@ -3,10 +3,10 @@ declare(strict_types=1);
 
 namespace NeutromeLabs\Core\Helper;
 
+use Magento\Backend\Model\UrlInterface as BackendUrlInterface;
+use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
-use Magento\Framework\App\Config\Storage\WriterInterface;
-use Magento\Backend\Model\UrlInterface as BackendUrlInterface;
 use Magento\Framework\App\RequestInterface;
 use Psr\Log\LoggerInterface;
 
@@ -26,11 +26,12 @@ class Data extends AbstractHelper
     protected LoggerInterface $logger;
 
     public function __construct(
-        Context $context,
-        WriterInterface $configWriter,
+        Context             $context,
+        WriterInterface     $configWriter,
         BackendUrlInterface $backendUrlBuilder,
-        RequestInterface $request
-    ) {
+        RequestInterface    $request
+    )
+    {
         parent::__construct($context);
         $this->configWriter = $configWriter;
         $this->backendUrlBuilder = $backendUrlBuilder;
@@ -64,13 +65,6 @@ class Data extends AbstractHelper
         $this->configWriter->save(self::TOKEN_CONFIG_PATH, $token);
     }
 
-    public function getNeutromeBaseUrl(): ?string
-    {
-        return $this->scopeConfig->getValue(
-            self::BASE_URL_CONFIG_PATH
-        );
-    }
-
     public function getEmailFromRecord(?array $userRecord): ?string
     {
         return $userRecord['email'] ?? null;
@@ -83,5 +77,12 @@ class Data extends AbstractHelper
             return null;
         }
         return rtrim($baseUrl, '/') . '/profile';
+    }
+
+    public function getNeutromeBaseUrl(): ?string
+    {
+        return $this->scopeConfig->getValue(
+            self::BASE_URL_CONFIG_PATH
+        );
     }
 }

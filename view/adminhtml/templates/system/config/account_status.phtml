@@ -1,7 +1,10 @@
 <?php
 /**
- * @var \NeutromeLabs\Core\Block\Adminhtml\System\Config\AccountStatus $block
+ * @var AccountStatus $block
  */
+
+use NeutromeLabs\Core\Block\Adminhtml\System\Config\AccountStatus;
+
 ?>
 
 <?php $statusMessage = $block->getStatusMessage(); ?>
@@ -21,39 +24,39 @@
         class="action-secondary"
         onclick="
             try {
-                let currentUrl = new URL(window.location.href);
-                currentUrl.searchParams.delete('callback');
-                window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(currentUrl.toString());
+            let currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.delete('callback');
+            window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(currentUrl.toString());
             } catch (e) {
-                
-                let fallbackUrl = window.location.href.split('?')[0]; 
-                window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(fallbackUrl);
-                console.error('Error constructing NeutromeLabs sign-in URL:', e);
+
+            let fallbackUrl = window.location.href.split('?')[0];
+            window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(fallbackUrl);
+            console.error('Error constructing NeutromeLabs sign-in URL:', e);
             }
             return false;
-        "
-        >
+            "
+    >
         <span><?= $block->escapeHtml(__('Sign In to a Different Account')) ?></span>
     </button>
 <?php else: ?>
     <button
         type="button"
         title="<?= $block->escapeHtmlAttr(__('Sign In')) ?>"
-        class="action-primary" 
+        class="action-primary"
         onclick="
             try {
-                let currentUrl = new URL(window.location.href);
-                currentUrl.searchParams.delete('callback');
-                window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(currentUrl.toString());
+            let currentUrl = new URL(window.location.href);
+            currentUrl.searchParams.delete('callback');
+            window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(currentUrl.toString());
             } catch (e) {
-                
-                let fallbackUrl = window.location.href.split('?')[0];
-                window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(fallbackUrl);
-                console.error('Error constructing NeutromeLabs sign-in URL:', e);
+
+            let fallbackUrl = window.location.href.split('?')[0];
+            window.location.href = '<?= $block->escapeJs($block->getSignInUrl()) ?>' + encodeURIComponent(fallbackUrl);
+            console.error('Error constructing NeutromeLabs sign-in URL:', e);
             }
             return false;
-        "
-        >
+            "
+    >
         <span><?= $block->escapeHtml(__('Sign In')) ?></span>
     </button>
     <p class="note">

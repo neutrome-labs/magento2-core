@@ -1,17 +1,21 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <tab id="neutromelabs" translate="label" sortOrder="1000">
             <label>Neutrome Labs</label>
         </tab>
-        <section id="cloud" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+        <section id="cloud" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0"
+                 showInStore="0">
             <class>separator-top</class>
             <label>Cloud Account</label>
             <tab>neutromelabs</tab>
             <resource>NeutromeLabs_Core::config</resource>
-            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0"
+                   showInStore="0">
                 <label>General</label>
-                <field id="account_status" translate="label comment" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <field id="account_status" translate="label comment" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
                     <label>Account</label>
                     <frontend_model>NeutromeLabs\Core\Block\Adminhtml\System\Config\AccountStatus</frontend_model>
                 </field>

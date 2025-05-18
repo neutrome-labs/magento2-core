@@ -3,14 +3,16 @@ declare(strict_types=1);
 
 namespace NeutromeLabs\Core\Block\Adminhtml\System\Config;
 
+use Exception;
+use Magento\Backend\Block\Template\Context;
+use Magento\Config\Block\System\Config\Form\Field;
 use Magento\Framework\Data\Form\Element\AbstractElement;
 use Magento\Framework\Module\Manager;
 use NeutromeLabs\Core\Helper\Data as CoreHelper;
 use NeutromeLabs\Core\Model\ApiClient;
-use Magento\Backend\Block\Template\Context;
 use Psr\Log\LoggerInterface;
 
-class AccountStatus extends \Magento\Config\Block\System\Config\Form\Field
+class AccountStatus extends Field
 {
     protected $_template = 'NeutromeLabs_Core::system/config/account_status.phtml';
 
@@ -25,12 +27,13 @@ class AccountStatus extends \Magento\Config\Block\System\Config\Form\Field
     protected ?string $statusMessage = null;
 
     public function __construct(
-        Context $context,
+        Context    $context,
         CoreHelper $coreHelper,
-        ApiClient $apiClient,
-        Manager $moduleManager,
-        array $data = []
-    ) {
+        ApiClient  $apiClient,
+        Manager    $moduleManager,
+        array      $data = []
+    )
+    {
         $this->coreHelper = $coreHelper;
         $this->apiClient = $apiClient;
         $this->moduleManager = $moduleManager;
@@ -71,23 +74,12 @@ class AccountStatus extends \Magento\Config\Block\System\Config\Form\Field
                 $this->statusMessage = (string)__('Failed to verify account. It might be invalid or expired.');
                 $this->logger->warning('NeutromeLabs Core: Failed to refresh token or get user record.', ['callbackTokenProvided' => !empty($this->coreHelper->getCallbackToken())]);
             }
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $this->logger->critical('NeutromeLabs Core: Error processing token in AccountStatus block.', ['exception' => $e]);
             $this->statusMessage = (string)__('An unexpected error occurred. Please check logs.');
         }
 
         $this->tokenProcessed = true;
-    }
-
-    protected function _getElementHtml(AbstractElement $element): string
-    {
-        if (!$this->moduleManager->isEnabled('NeutromeLabs_Core')) {
-            return '<p>' . (string)__('NeutromeLabs Core module is disabled.') . '</p>';
-        }
-        if (!$this->tokenProcessed) {
-            $this->processTokenAndFetchAccount();
-        }
-        return $this->_toHtml();
     }
 
     public function getAccountEmail(): ?string
@@ -108,5 +100,16 @@ class AccountStatus extends \Magento\Config\Block\System\Config\Form\Field
     public function getStatusMessage(): ?string
     {
         return $this->statusMessage;
+    }
+
+    protected function _getElementHtml(AbstractElement $element): string
+    {
+        if (!$this->moduleManager->isEnabled('NeutromeLabs_Core')) {
+            return '<p>' . (string)__('NeutromeLabs Core module is disabled.') . '</p>';
+        }
+        if (!$this->tokenProcessed) {
+            $this->processTokenAndFetchAccount();
+        }
+        return $this->_toHtml();
     }
 }
