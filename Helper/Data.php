@@ -14,11 +14,16 @@ use Psr\Log\LoggerInterface;
 class Data extends AbstractHelper
 {
 
-    const BASE_URL_CONFIG_PATH = 'neutromelabs/cloud/base_url';
-    const TOKEN_CONFIG_PATH = 'neutromelabs/cloud/token';
+    const string BASE_URL_CONFIG_PATH = 'neutromelabs/cloud/base_url';
+
+    const string TOKEN_CONFIG_PATH = 'neutromelabs/cloud/token';
+
     protected WriterInterface $configWriter;
+
     protected BackendUrlInterface $backendUrlBuilder;
+
     protected RequestInterface $request;
+
     protected LoggerInterface $logger;
 
     public function __construct(

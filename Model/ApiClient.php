@@ -55,11 +55,6 @@ class ApiClient
 
     public function refreshAuthAndGetUserDetails(?string $currentToken): ?array
     {
-        if (empty($currentToken)) {
-            $this->logger->info('ApiClient: No current token provided for auth refresh.');
-            return null;
-        }
-
         try {
             $responseData = $this->fetch('/collections/users/auth-refresh', 'POST', null, [
                 'Authorization' => 'Bearer ' . ($currentToken ?? $this->coreHelper->getStoredToken())
