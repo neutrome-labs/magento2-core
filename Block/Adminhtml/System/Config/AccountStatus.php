@@ -64,8 +64,8 @@ class AccountStatus extends Field
             $this->userRecord = $this->apiClient->refreshAuthAndGetUserDetails($this->coreHelper->getCallbackToken());
             if ($this->userRecord) {
                 $this->userEmail = $this->coreHelper->getEmailFromRecord($this->userRecord);
-                if ($this->userEmail) {
-                    $this->statusMessage = (string)__('Account verified.');
+                if (!!$this->coreHelper->getCallbackToken() && $this->userEmail) {
+                    $this->statusMessage = (string)__('Account status refreshed.');
                 } else {
                     $this->statusMessage = (string)__('Token seems valid, but could not retrieve email. Please check NeutromeLabs account details.');
                     $this->logger->warning('NeutromeLabs Core: Token refreshed, but no email in user record.', ['record' => $this->userRecord]);

@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace NeutromeLabs\Core\Helper;
 
 use Magento\Backend\Model\UrlInterface as BackendUrlInterface;
+use Magento\Framework\App\Cache\TypeListInterface;
 use Magento\Framework\App\Config\Storage\WriterInterface;
 use Magento\Framework\App\Helper\AbstractHelper;
 use Magento\Framework\App\Helper\Context;
@@ -19,6 +20,8 @@ class Data extends AbstractHelper
 
     protected WriterInterface $configWriter;
 
+    protected TypeListInterface $typeList;
+
     protected BackendUrlInterface $backendUrlBuilder;
 
     protected RequestInterface $request;
@@ -28,12 +31,14 @@ class Data extends AbstractHelper
     public function __construct(
         Context             $context,
         WriterInterface     $configWriter,
+        TypeListInterface   $cacheTypeList,
         BackendUrlInterface $backendUrlBuilder,
         RequestInterface    $request
     )
     {
         parent::__construct($context);
         $this->configWriter = $configWriter;
+        $this->typeList = $cacheTypeList;
         $this->backendUrlBuilder = $backendUrlBuilder;
         $this->request = $request;
         $this->logger = $context->getLogger();
@@ -63,6 +68,7 @@ class Data extends AbstractHelper
     public function saveToken(string $token): void
     {
         $this->configWriter->save(self::TOKEN_CONFIG_PATH, $token);
+        $this->typeList->cleanType('config');
     }
 
     public function getEmailFromRecord(?array $userRecord): ?string
