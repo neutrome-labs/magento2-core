@@ -1,12 +1,12 @@
 {
     "name": "neutrome-labs/magento2-core",
-    "description": "neutrome-labs/magento2-core",
+    "description": "Neutrome Labs Core Functions",
     "type": "magento2-module",
     "license": [
         "OSL-3.0",
         "AFL-3.0"
     ],
-    "version": "0.0.1",
+    "version": "1.0.0",
     "autoload": {
         "files": [
             "registration.php"
